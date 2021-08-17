@@ -382,7 +382,7 @@ def menu(death_count):
             ####################################################  
 
             font1 = pygame.font.SysFont('lucidasans',20)
-            text = font1.render('Press any Key to Restart', True, (255, 255, 255))
+            text = font1.render('Press Any Key to Restart', True, (255, 255, 255))
             textRect = text.get_rect()
             textRect.center = (SCREEN_WIDTH // 2, 318)
             SCREEN.blit(text, textRect)
