@@ -297,7 +297,7 @@ def main():
                     player.shield -= 4
                 else:
                     death_sound.play()
-                    pygame.time.delay(500)
+                    pygame.time.delay(800)
                     death_count += 1
                     menu(death_count)
         #end       
