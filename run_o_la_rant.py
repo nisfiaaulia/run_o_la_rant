@@ -105,7 +105,7 @@ class Jack:
             self.jack_slide = False
             self.jack_run = False
             self.jack_jump = True
-            jump_sound.play()
+            jump_sound.play()  #menyalakan sfx jump
 
 
         elif userInput[pygame.K_DOWN] and not self.jack_jump:
@@ -242,10 +242,14 @@ def score():
     highScoreRect.center = (130,48)
     SCREEN.blit(high_score_p, highScoreRect)
 
+def getHighScore():
+    with open("high_score.txt","r") as h:
+        return h.read()
+
 ###################################################################################
 def main():
     global game_speed, x_pos_bg, y_pos_bg, points, powers, obstacles, high_score
-    pygame.mixer.music.play(loops=-1)
+    pygame.mixer.music.play(loops=-1) #fungsi untuk memainkan bgm, di loop -1 agar tidak berhenti
     run = True
     clock = pygame.time.Clock()
     player = Jack()
@@ -257,6 +261,12 @@ def main():
     obstacles = []
     death_count = 0
 
+    try:
+        high_score = int(getHighScore())
+    except:
+        high_score = 0
+
+    #fungsi untuk menggerakan garis bawah
     def background():
         global x_pos_bg, y_pos_bg
         image_width = BG.get_width()
@@ -324,6 +334,8 @@ def main():
         score()
         if (high_score < points):
             high_score=points
+        with open("high_score.txt","w") as h:
+            h.write(str(high_score))
         #end
             
         clock.tick(30)
@@ -339,16 +351,16 @@ def menu(death_count):
         font = pygame.font.SysFont('lucidasans',30,True)
 
         if death_count == 0:
-            SCREEN.blit(HOME_BG,(0,0))
+            SCREEN.blit(HOME_BG,(0,0)) #untuk menampilkan title screen
 
         #GameOverScreen
         elif death_count > 0:
             SCREEN.blit(BACKGROUND,(0,0))
             SCREEN.blit(TITLE,(323,40))
-            dead_font = pygame.font.Font('assets/font.ttf',80)
-            textDead = dead_font.render("YOU'RE DEAD!", True, (182,160,143))
+            dead_font = pygame.font.Font('assets/font.ttf',80) #fungsi untuk load font dari folder assets
+            textDead = dead_font.render("YOU'RE DEAD!", True, (182,160,143)) #fungsi untuk menampilkan tulisan
             textDeadRect = textDead.get_rect()
-            textDeadRect.center = (SCREEN_WIDTH // 2+10,100)
+            textDeadRect.center = (SCREEN_WIDTH // 2+10,100) #posisis tulisan
             SCREEN.blit(textDead, textDeadRect)
             if high_score == points:
                 font2 = pygame.font.SysFont('lucidasans',15,False,True)
